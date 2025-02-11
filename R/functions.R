@@ -140,6 +140,18 @@ pv <- function(rate, g = 0, nper, pmt, t = 1) {
 #' \code{\link{pv}} for the present value calculation used within this function.
 #'
 #' @export
+# roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
+#   pv_vec <- double(length(pmt_vec))
+#   for (i in 1:length(pv_vec)) {
+#     if (i == 1) {
+#       pv_vec[i] <- pv(rate, g, nper, pmt_vec[2], t)
+#     } else {
+#       pv_vec[i] <- pv_vec[i-1] * (1 + rate) - pmt_vec[i] * (1 + rate)^(1 - t)
+#     }
+#   }
+#
+#   return(pv_vec)
+# }
 roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
   pv_vec <- double(length(pmt_vec))
   for (i in 1:length(pv_vec)) {
@@ -271,25 +283,37 @@ get_pmt_growth <- function(rate, growth, t) {
 #' interest_vec <- c(0.05, 0.05, 0.05, 0.05)
 #' value_vec <- c(100, 200, 300, 400)
 #' get_pvfb(sep_rate_vec, interest_vec, value_vec)
+# get_pvfb <- function(sep_rate_vec, interest_vec, value_vec) {
+#     N <- length(value_vec)
+#     PVFB <- double(length = N)
+#     for (i in 1:N) {
+#       sep_rate <- sep_rate_vec[i:N]
+#       sep_prob <- cumprod(1 - sep_rate) * sep_rate       # Probability of separating in each subsequent period
+#       interest <- interest_vec[i]
+#       if (i < N) {
+#         value_sub <- value_vec[(i+1):N]                  # Payment in t+1 until the end of periods
+#         sep_prob_sub <- sep_prob[-1]                     # Probability of remaining in the plan until the period t
+#         df_sub <- (1 + interest)^(-(1:length(value_sub))) # Discount factors in each year based on the interest rate used in t
+#         PVFB[i] <- sum(value_sub * sep_prob_sub * df_sub) # The product of probability, discount factor, future values (benefits) is PVFB
+#       } else {
+#         PVFB[i = N] <- NA                                 # At the last period, there are no future periods, so PVFB is 0
+#       }
+#     }
+#     return(PVFB)
+#   }
 get_pvfb <- function(sep_rate_vec, interest_vec, value_vec) {
-    N <- length(value_vec)
-    PVFB <- double(length = N)
-    for (i in 1:N) {
-      sep_rate <- sep_rate_vec[i:N]
-      sep_prob <- cumprod(1 - sep_rate) * sep_rate       # Probability of separating in each subsequent period
-      interest <- interest_vec[i]
-      if (i < N) {
-        value_sub <- value_vec[(i+1):N]                  # Payment in t+1 until the end of periods
-        sep_prob_sub <- sep_prob[-1]                     # Probability of remaining in the plan until the period t
-        df_sub <- (1 + interest)^(-(1:length(value_sub))) # Discount factors in each year based on the interest rate used in t
-        PVFB[i] <- sum(value_sub * sep_prob_sub * df_sub) # The product of probability, discount factor, future values (benefits) is PVFB
-      } else {
-        PVFB[i = N] <- NA                                 # At the last period, there are no future periods, so PVFB is 0
-      }
-    }
-    return(PVFB)
+  PVFB <- double(length = length(value_vec))
+  for (i in 1:length(value_vec)) {
+    sep_rate <- sep_rate_vec[i:length(sep_rate_vec)]
+    #sep_prob in a given year is the probability that the member will survive all the previous years and get terminated exactly in the given year
+    sep_prob <- cumprod(1 - lag(sep_rate, n = 2, default = 0)) * lag(sep_rate, default = 0)
+    interest <- interest_vec[i]
+    value <- value_vec[i:length(value_vec)]
+    value_adjusted <- value * sep_prob
+    PVFB[i] <- npv(interest, value_adjusted[2:length(value_adjusted)])
   }
-
+  return(PVFB)
+}
 
 #' Calculate Annuity Factors with Survival and Cost-of-Living Adjustments
 #'
