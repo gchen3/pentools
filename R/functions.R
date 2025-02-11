@@ -176,22 +176,22 @@ roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
 #' @examples
 #' cf <- c(100, 200, 300, 400, 500, 600)
 #' npv(0.05, cf)  # 1704.37
-npv <- function(rate, cf) {
-  df <- (1+rate)^(-(1:(length(cf))))    # Discount factor in each year based on rate
-  pv <- sum(cf * df)                    # The sum of the product of cash flow and discount factor in each year is PV
-  return(pv)
-}
-# npv <- function(rate, cashflows) {
-#   for(i in 1:length(cashflows)){
-#     if(i == 1){
-#       NPV <- cashflows[i]/((1+rate)^(i))
-#     } else {
-#       NPV <- NPV + cashflows[i]/((1+rate)^(i))
-#     }
-#   }
-#
-#   return(NPV)
+# npv <- function(rate, cf) {
+#   df <- (1+rate)^(-(1:(length(cf))))    # Discount factor in each year based on rate
+#   pv <- sum(cf * df)                    # The sum of the product of cash flow and discount factor in each year is PV
+#   return(pv)
 # }
+npv <- function(rate, cashflows) {
+  for(i in 1:length(cashflows)){
+    if(i == 1){
+      NPV <- cashflows[i]/((1+rate)^(i))
+    } else {
+      NPV <- NPV + cashflows[i]/((1+rate)^(i))
+    }
+  }
+
+  return(NPV)
+}
 
 
 #' get_pv_cf_roll returns the remaining present value of future cash flows (cf) in every year forward
@@ -248,18 +248,18 @@ get_pmt_due <- function(rate, t) {
 #'
 #' @examples
 #' get_pmt0(0.05, 5, 1000) # Example: calculates the total first payment
-get_pmt0 <- function(r, nper, pv) {
-  get_pmt_due(r, nper)*pv
-}
 # get_pmt0 <- function(r, nper, pv) {
-#   if (r == 0) {
-#     a <- pv/nper
-#   } else {
-#     a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
-#   }
-#
-#   return(a)
+#   get_pmt_due(r, nper)*pv
 # }
+get_pmt0 <- function(r, nper, pv) {
+  if (r == 0) {
+    a <- pv/nper
+  } else {
+    a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
+  }
+
+  return(a)
+}
 
 
 #' get_pmt_growth calculates the first payment for an growth annuity due with a present value pv,
@@ -356,38 +356,38 @@ get_pvfb <- function(sep_rate_vec, interest_vec, value_vec) {
 #' annfactor(surv_DR_vec, cola_vec, one_time_cola = FALSE)
 #'
 #' @export
-annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
-  N <- length(surv_DR_vec)                                     # Define the length of the input vector
-  annfactor_vec <- numeric(N)                                  # Create the output vector with the same length
-
-  for (i in 1:N) {
-    cola <- ifelse(one_time_cola, 0, cola_vec[i])              # If one-time COLA, the cola is 0 (Question: This actually means no COLAs)
-    cola_project <- c(0, rep(cola, max(0, N - i)))             # Project COLA for future periods with the same COLA rate
-
-    cumprod_cola <- cumprod(1 + cola_project)                  # Calculate the cumulative product of previous COLA rates
-    surv_ratio <- surv_DR_vec[i:N] / surv_DR_vec[i]            # Set the base year survival as 1, calculate probability of survival in future years
-
-    annfactor_vec[i] <- sum(surv_ratio * cumprod_cola)         # The sum of product of cumulative COLA increase and survival rates to a future year is the annuity factor considering COLA
-  }
-
-  return(annfactor_vec)
-}
-# annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = F){
-#   annfactor_vec <- double(length(surv_DR_vec))
-#   for (i in 1:length(annfactor_vec)) {
-#     cola <- ifelse(one_time_cola == F, cola_vec[i], 0)
+# annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
+#   N <- length(surv_DR_vec)                                     # Define the length of the input vector
+#   annfactor_vec <- numeric(N)                                  # Create the output vector with the same length
 #
-#     if (i == length(annfactor_vec)) {
-#       cola_project <- 0
-#     } else {
-#       cola_project <- c(0, rep(cola, length((i+1):length(cola_vec))))
-#     }
+#   for (i in 1:N) {
+#     cola <- ifelse(one_time_cola, 0, cola_vec[i])              # If one-time COLA, the cola is 0 (Question: This actually means no COLAs)
+#     cola_project <- c(0, rep(cola, max(0, N - i)))             # Project COLA for future periods with the same COLA rate
 #
-#     cumprod_cola <- cumprod(1 + cola_project)
-#     annfactor_vec[i] <- sum((surv_DR_vec[i:length(surv_DR_vec)] / surv_DR_vec[i]) * cumprod_cola)
+#     cumprod_cola <- cumprod(1 + cola_project)                  # Calculate the cumulative product of previous COLA rates
+#     surv_ratio <- surv_DR_vec[i:N] / surv_DR_vec[i]            # Set the base year survival as 1, calculate probability of survival in future years
+#
+#     annfactor_vec[i] <- sum(surv_ratio * cumprod_cola)         # The sum of product of cumulative COLA increase and survival rates to a future year is the annuity factor considering COLA
 #   }
+#
 #   return(annfactor_vec)
 # }
+annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = F){
+  annfactor_vec <- double(length(surv_DR_vec))
+  for (i in 1:length(annfactor_vec)) {
+    cola <- ifelse(one_time_cola == F, cola_vec[i], 0)
+
+    if (i == length(annfactor_vec)) {
+      cola_project <- 0
+    } else {
+      cola_project <- c(0, rep(cola, length((i+1):length(cola_vec))))
+    }
+
+    cumprod_cola <- cumprod(1 + cola_project)
+    annfactor_vec[i] <- sum((surv_DR_vec[i:length(surv_DR_vec)] / surv_DR_vec[i]) * cumprod_cola)
+  }
+  return(annfactor_vec)
+}
 
 #' Calculate Present Value of Future Salaries (PVFS)
 #'
