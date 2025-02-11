@@ -4,7 +4,7 @@
 \alias{annfactor}
 \title{Calculate Annuity Factors with Survival and Cost-of-Living Adjustments}
 \usage{
-annfactor(surv_DR_vec, cola_vec, one_time_cola = F)
+annfactor(surv_DR_vec, cola_vec, one_time_cola = FALSE)
 }
 \arguments{
 \item{surv_DR_vec}{Numeric vector. A vector of survival discount rates, representing the probabilities of survival for each period.}

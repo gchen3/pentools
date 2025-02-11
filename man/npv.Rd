@@ -4,7 +4,7 @@
 \alias{npv}
 \title{npv calculates the present value of future cashflows (cf)}
 \usage{
-npv(rate, cashflows)
+npv(rate, cf)
 }
 \arguments{
 \item{rate}{Annual discount rate (scalar double).}
