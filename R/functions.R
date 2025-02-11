@@ -192,10 +192,7 @@ npv <- function(rate, cashflows) {
 
   return(NPV)
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 34720388301bdc8a33edfa5cf60ac7dfb2c39f55
 
 #' get_pv_cf_roll returns the remaining present value of future cash flows (cf) in every year forward
 #'
@@ -417,30 +414,30 @@ annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = F){
 #' get_pvfs(remaining_prob_vec, interest_vec, sal_vec)
 #'
 #' @export
-get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
-  N <- length(sal_vec)
-  PVFS <- double(length = N)
-  for (i in 1:N) {
-    remaining_prob_sub <- remaining_prob_vec[i:N] / remaining_prob_vec[i] # Calculate survival probabilities for future periods, using i year survival rate as the base
-    interest <- interest_vec[i]                                           # Get the interest rate for the current period
-    sal_sub <- sal_vec[i:N]                                               # Subset salaries for future periods from i period
-    df_sub  <- (1 + interest)^(-(1:length(sal_sub)))                      # Discount factors in each year based on the interest rate used in t
-    PVFS[i] <- sum(sal_sub * remaining_prob_sub * df_sub)                 # The sum of product of the future salaries, survival probability, and discount factor is present value of future salaries
-  }
-  return(PVFS)
-}
 # get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
-#   PVFS <- double(length = length(sal_vec))
-#   for (i in 1:length(sal_vec)) {
-#     remaining_prob_og <- remaining_prob_vec[i:length(remaining_prob_vec)]
-#     remaining_prob <- remaining_prob_og / remaining_prob_og[1]
-#     interest <- interest_vec[i]
-#     sal <- sal_vec[i:length(sal_vec)]
-#     sal_adjusted <- sal * remaining_prob
-#     PVFS[i] <- npv(interest, sal_adjusted)
+#   N <- length(sal_vec)
+#   PVFS <- double(length = N)
+#   for (i in 1:N) {
+#     remaining_prob_sub <- remaining_prob_vec[i:N] / remaining_prob_vec[i] # Calculate survival probabilities for future periods, using i year survival rate as the base
+#     interest <- interest_vec[i]                                           # Get the interest rate for the current period
+#     sal_sub <- sal_vec[i:N]                                               # Subset salaries for future periods from i period
+#     df_sub  <- (1 + interest)^(-(1:length(sal_sub)))                      # Discount factors in each year based on the interest rate used in t
+#     PVFS[i] <- sum(sal_sub * remaining_prob_sub * df_sub)                 # The sum of product of the future salaries, survival probability, and discount factor is present value of future salaries
 #   }
 #   return(PVFS)
 # }
+get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
+  PVFS <- double(length = length(sal_vec))
+  for (i in 1:length(sal_vec)) {
+    remaining_prob_og <- remaining_prob_vec[i:length(remaining_prob_vec)]
+    remaining_prob <- remaining_prob_og / remaining_prob_og[1]
+    interest <- interest_vec[i]
+    sal <- sal_vec[i:length(sal_vec)]
+    sal_adjusted <- sal * remaining_prob
+    PVFS[i] <- npv(interest, sal_adjusted)
+  }
+  return(PVFS)
+}
 
 
 #' Recursive Growing Function with Lag
