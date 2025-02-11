@@ -192,7 +192,10 @@ npv <- function(rate, cashflows) {
 
   return(NPV)
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 34720388301bdc8a33edfa5cf60ac7dfb2c39f55
 
 #' get_pv_cf_roll returns the remaining present value of future cash flows (cf) in every year forward
 #'
