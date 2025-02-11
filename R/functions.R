@@ -204,13 +204,13 @@ npv <- function(rate, cashflows) {
 #' @examples
 #' cf <- c(100, 200, 300, 400, 500, 600)
 #' get_pv_cf_roll (0.05, cf) #$1,704.37 $1,609.13 $1,427.72 $1,168.57 $839.49) $447.73
-# get_pv_cf_roll <- function(rate, cf) {
-#   pv <- numeric(length(cf))
-#   for(i in 1:length(cf)) {
-#   pv[i] <- npv(rate, cf[i:length(cf)])
-#   }
-#   return(pv)
-# }
+get_pv_cf_roll <- function(rate, cf) {
+  pv <- numeric(length(cf))
+  for(i in 1:length(cf)) {
+  pv[i] <- npv(rate, cf[i:length(cf)])
+  }
+  return(pv)
+}
 
 #' get_pmt_due calculates the first payment of an annuity due with a present value pv, interest rate (rate), and remaining period (t)
 #' payments are made in advance (beginning of each time period)
@@ -225,14 +225,14 @@ npv <- function(rate, cashflows) {
 #'
 #' @examples
 #' get_pmt_due(0.05, 5) # 0.219976
-# get_pmt_due <- function(rate, t) {
-#   if (rate == 0) {
-#     pmt = 1/t
-#   } else {
-#   pmt = (rate / (1 -(1 + rate) ^ (-t))) * (1 / (1 + rate))
-#   }
-#   return(pmt)
-# }
+get_pmt_due <- function(rate, t) {
+  if (rate == 0) {
+    pmt = 1/t
+  } else {
+  pmt = (rate / (1 -(1 + rate) ^ (-t))) * (1 / (1 + rate))
+  }
+  return(pmt)
+}
 
 #' get_pmt0 calculates the total first payment of an annuity due with a present value (pv),
 #' interest rate (r), and the number of periods (nper).
@@ -274,14 +274,14 @@ get_pmt0 <- function(r, nper, pv) {
 #'
 #' @examples
 #' get_pmt_growth(0.05, 0.02, 5) #0.2117597
-# get_pmt_growth <- function(rate, growth, t) {
-#   if (rate == growth) {
-#   pmt_growth = 1/t
-#   } else {
-#   pmt_growth = ((rate - growth) / (1 - ((1 + growth) / (1 + rate)) ^ t)) * (1 / (1 + rate))
-#   }
-#   return(pmt_growth)
-# }
+get_pmt_growth <- function(rate, growth, t) {
+  if (rate == growth) {
+  pmt_growth = 1/t
+  } else {
+  pmt_growth = ((rate - growth) / (1 - ((1 + growth) / (1 + rate)) ^ t)) * (1 / (1 + rate))
+  }
+  return(pmt_growth)
+}
 
 #' Calculate the Present Value of Future Benefits (PVFB)
 #'
