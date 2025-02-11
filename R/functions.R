@@ -389,11 +389,20 @@ get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
 #' recur_grow(x, g)
 #'
 #' @export
+# recur_grow <- function(x, g) {
+#   g_cul <- cumprod(1 + g)
+#   x[2:length(x)] <- x[1] * g_cul[1:(length(g) - 1)]
+#   return(x)
+# }
 recur_grow <- function(x, g) {
-  g_cul <- cumprod(1 + g)
-  x[2:length(x)] <- x[1] * g_cul[1:(length(g) - 1)]
+  if (length(x) > 1) {
+    for (i in 2:length(x)) {
+      x[i] <- x[i-1] * (1 + g[i - 1])
+    }
+  }
   return(x)
 }
+
 
 #' Recursive Growing Function (No Lag)
 #'
