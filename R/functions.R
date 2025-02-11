@@ -427,9 +427,17 @@ recur_grow <- function(x, g) {
 #' @seealso \code{\link{recur_grow}} for the version with lag.
 #'
 #' @export
+# recur_grow2 <- function(x, g) {
+#   g[1:length(g)-1] <- g[2:length(g)]
+#   recur_grow(x, g)
+# }
 recur_grow2 <- function(x, g) {
-  g[1:length(g)-1] <- g[2:length(g)]
-  recur_grow(x, g)
+  if (length(x) > 1) {
+    for (i in 2:length(x)) {
+      x[i] <- x[i-1] * (1 + g[i])
+    }
+  }
+  return(x)
 }
 
 #' Recursive Growing Function with a Single Base and Fixed Growth Rate
@@ -454,12 +462,21 @@ recur_grow2 <- function(x, g) {
 #' recur_grow3(x, g, nper)
 #'
 #' @export
+# recur_grow3 <- function(x, g, nper) {
+#   growth_factors <- cumprod(rep(1 + g, nper - 1))
+#   x_vec <- c(x, x * growth_factors)
+#   return(x_vec)
+# }
 recur_grow3 <- function(x, g, nper) {
-  growth_factors <- cumprod(rep(1 + g, nper - 1))
-  x_vec <- c(x, x * growth_factors)
+  x_vec <- double(length = nper)
+  x_vec[1] <- x
+
+  for (i in 2:length(x_vec)) {
+    x_vec[i] <- x_vec[i-1] * (1 + g)
+  }
+
   return(x_vec)
 }
-
 
 
 # not yet developed -------------------------------------------------------

@@ -126,17 +126,15 @@
 # surv_DR_vec <- c(0.95, 0.90, 0.85, 0.80, 0.95)
 # cola_vec <- c(0.02, 0.02, 0.02, 0.02, 0.02)
 #
-# annfactor(surv_DR_vec, cola_vec, one_time_cola = FALSE)
-# annfactor_2(surv_DR_vec, cola_vec, one_time_cola = FALSE)
+# annfactor_reason(surv_DR_vec, cola_vec, one_time_cola = FALSE)
 # annfactor(surv_DR_vec, cola_vec, one_time_cola = TRUE)
-# annfactor_2(surv_DR_vec, cola_vec, one_time_cola = TRUE)
 #
 # # cola_vec_2 <- c(0.03, 0.03, 0.03, 0.03, 0.03)
 # # annfactor(surv_DR_vec, cola_vec_2, one_time_cola = TRUE)
 # # annfactor_2(surv_DR_vec, cola_vec_2, one_time_cola = TRUE)
 #
 # microbenchmark (annfactor(surv_DR_vec, cola_vec, one_time_cola = FALSE),
-#                 annfactor_2(surv_DR_vec, cola_vec, one_time_cola = FALSE),
+#                 annfactor_reason(surv_DR_vec, cola_vec, one_time_cola = FALSE),
 #                 times = 1000)
 #
 # npv = function(rate, cashflows) {
@@ -366,6 +364,7 @@
 # g <- 0.03
 # nper <- 5
 # pmt_vec <- c(100, 102, 103, 105, 109)
-# roll_pv(rate, g, nper, pmt_vec)
 #
+# roll_pv(rate, g, nper, pmt_vec)
 # roll_pv_reason(rate, g, nper, pmt_vec)
+#
