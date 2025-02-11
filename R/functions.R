@@ -176,22 +176,22 @@ roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
 #' @examples
 #' cf <- c(100, 200, 300, 400, 500, 600)
 #' npv(0.05, cf)  # 1704.37
-# npv <- function(rate, cf) {
-#   df <- (1+rate)^(-(1:(length(cf))))    # Discount factor in each year based on rate
-#   pv <- sum(cf * df)                    # The sum of the product of cash flow and discount factor in each year is PV
-#   return(pv)
-# }
-npv <- function(rate, cashflows) {
-  for(i in 1:length(cashflows)){
-    if(i == 1){
-      NPV <- cashflows[i]/((1+rate)^(i))
-    } else {
-      NPV <- NPV + cashflows[i]/((1+rate)^(i))
-    }
-  }
-
-  return(NPV)
+npv <- function(rate, cf) {
+  df <- (1+rate)^(-(1:(length(cf))))    # Discount factor in each year based on rate
+  pv <- sum(cf * df)                    # The sum of the product of cash flow and discount factor in each year is PV
+  return(pv)
 }
+# npv <- function(rate, cashflows) {
+#   for(i in 1:length(cashflows)){
+#     if(i == 1){
+#       NPV <- cashflows[i]/((1+rate)^(i))
+#     } else {
+#       NPV <- NPV + cashflows[i]/((1+rate)^(i))
+#     }
+#   }
+#
+#   return(NPV)
+# }
 
 #' get_pv_cf_roll returns the remaining present value of future cash flows (cf) in every year forward
 #'
@@ -247,18 +247,18 @@ get_pmt_due <- function(rate, t) {
 #'
 #' @examples
 #' get_pmt0(0.05, 5, 1000) # Example: calculates the total first payment
-# get_pmt0 <- function(r, nper, pv) {
-#   get_pmt_due(r, nper)*pv
-# }
 get_pmt0 <- function(r, nper, pv) {
-  if (r == 0) {
-    a <- pv/nper
-  } else {
-    a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
-  }
-
-  return(a)
+  get_pmt_due(r, nper)*pv
 }
+# get_pmt0 <- function(r, nper, pv) {
+#   if (r == 0) {
+#     a <- pv/nper
+#   } else {
+#     a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
+#   }
+#
+#   return(a)
+# }
 
 
 #' get_pmt_growth calculates the first payment for an growth annuity due with a present value pv,
