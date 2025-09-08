@@ -552,16 +552,78 @@ recur_grow3 <- function(x, g, nper) {
 # }
 
 
-# not yet developed -------------------------------------------------------
-
-
+#' Calculate Payment for Growing Annuity
+#'
+#' This function calculates the payment amount for a growing annuity given a present value,
+#' interest rate, growth rate, number of periods, and payment timing.
+#'
+#' @param r Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).
+#' @param g Numeric. The growth rate of payments per period as a decimal (default is 0).
+#' @param nper Integer. The total number of periods for the annuity.
+#' @param pv Numeric. The present value of the growing annuity.
+#' @param t Integer. Timing of payments:
+#'   - \code{t = 1}: Payments occur at the end of the period (default).
+#'   - \code{t = 0}: Payments occur at the beginning of the period.
+#'
+#' @return Numeric. The payment amount for the growing annuity.
+#'
+#' @details
+#' This function calculates the payment by first adjusting the discount rate to account for growth,
+#' then using the payment calculation for a standard annuity, and finally adjusting for timing.
+#' The formula uses an effective rate of (1+r)/(1+g) - 1 and adjusts the present value by (1+r)^t.
+#'
+#' @examples
+#' # Calculate payment for a growing annuity with 5% interest, 2% growth, 10 periods
+#' get_pmt(r = 0.05, g = 0.02, nper = 10, pv = 10000, t = 1)
+#'
+#' # Calculate payment for an annuity with no growth (standard annuity)
+#' get_pmt(r = 0.05, g = 0, nper = 10, pv = 10000, t = 1)
+#'
+#' # Calculate payment for payments at beginning of period
+#' get_pmt(r = 0.05, g = 0.02, nper = 10, pv = 10000, t = 0)
+#'
+#' @seealso
+#' \code{\link{get_pmt0}} for the underlying payment calculation used within this function.
+#'
 #' @export
 get_pmt <- function(r, g = 0, nper, pv, t = 1) {
   a <- get_pmt0((1+r)/(1+g) - 1, nper, pv*(1+r)^t)
   return(a)
 }
 
-#Cumulative future values function (with interest being a single value)
+#' Calculate Cumulative Future Values
+#'
+#' This function computes the cumulative future values of a series of cash flows,
+#' compounding at a given interest rate over time.
+#'
+#' @param interest Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).
+#' @param cashflow Numeric vector. A vector of cash flow amounts for each period.
+#' @param first_value Numeric. The initial cumulative value at the start (default is 0).
+#'
+#' @return Numeric vector. A vector of cumulative future values, where each element represents
+#'         the accumulated value up to that period, including compound interest.
+#'
+#' @details
+#' The cumulative future value is calculated iteratively:
+#' \itemize{
+#'   \item For the first period, the cumulative value equals \code{first_value}.
+#'   \item For subsequent periods, the formula is:
+#'         \code{cumvalue[i] = cumvalue[i-1] * (1 + interest) + cashflow[i-1]}
+#' }
+#' This represents the previous cumulative value growing with interest plus the new cash flow.
+#'
+#' @examples
+#' # Example with annual cash flows and 5% interest
+#' cashflows <- c(1000, 1200, 1500, 1800, 2000)
+#' get_cum_fv(interest = 0.05, cashflow = cashflows, first_value = 0)
+#'
+#' # Example starting with an initial value
+#' get_cum_fv(interest = 0.03, cashflow = c(500, 600, 700), first_value = 1000)
+#'
+#' # Example with varying cash flows
+#' varying_cf <- c(100, 150, 200, 250, 300, 350)
+#' get_cum_fv(interest = 0.04, cashflow = varying_cf, first_value = 500)
+#'
 #' @export
 get_cum_fv <- function(interest, cashflow, first_value = 0){
   cumvalue <- double(length = length(cashflow))
@@ -572,14 +634,51 @@ get_cum_fv <- function(interest, cashflow, first_value = 0){
   return(cumvalue)
 }
 
-#Adding new entrants function
+#' Add New Entrants to Workforce Matrix
+#'
+#' This function calculates the number of new entrants needed to maintain workforce growth
+#' and distributes them across entry ages, positioning them correctly in the workforce matrix.
+#'
+#' @param g Numeric. The assumed population growth rate of the plan as a decimal (e.g., 0.02 for 2%).
+#' @param ne_dist Numeric vector. A vector representing the distribution of new entrants
+#'        for each entry age. Should sum to 1.0.
+#' @param wf1 Numeric vector or matrix. The workforce population in period 1 (before decrements).
+#' @param wf2 Numeric vector or matrix. The workforce population after decrements have been applied.
+#' @param ea Numeric vector. A vector of entry ages for new entrants.
+#' @param age Numeric vector. A vector of all possible ages in the workforce.
+#' @param position_matrix Numeric matrix. A matrix that maps new entrant entry ages to the
+#'        correct positions in the workforce age structure.
+#'
+#' @return Numeric matrix. A matrix containing the number of new entrants positioned
+#'         correctly by entry age and current age to be added to the active workforce.
+#'
+#' @details
+#' The function works in three steps:
+#' \enumerate{
+#'   \item Calculates total new entrants needed: \code{ne = sum(wf1) * (1 + g) - sum(wf2)}
+#'   \item Distributes new entrants by entry age: \code{ne_vec = ne * ne_dist}
+#'   \item Positions new entrants in the workforce matrix using the position matrix
+#' }
+#' The position_matrix ensures new entrants are placed at the correct intersection of
+#' entry age and current age in the workforce structure.
+#'
+#' @examples
+#' # Example with workforce growth
+#' g <- 0.02  # 2% growth
+#' ne_dist <- c(0.3, 0.4, 0.2, 0.1)  # Distribution across 4 entry ages
+#' wf1 <- c(1000, 1200, 1100, 900)  # Initial workforce
+#' wf2 <- c(980, 1150, 1050, 850)   # Workforce after decrements
+#' ea <- c(25, 30, 35, 40)           # Entry ages
+#' age <- c(25, 30, 35, 40, 45, 50)  # All possible ages
+#'
+#' # Create position matrix (simplified example)
+#' position_matrix <- matrix(0, nrow = length(ea), ncol = length(age))
+#' diag(position_matrix) <- 1  # New entrants enter at their entry age
+#'
+#' add_new_entrants(g, ne_dist, wf1, wf2, ea, age, position_matrix)
+#'
 #' @export
 add_new_entrants <- function(g, ne_dist, wf1, wf2, ea, age, position_matrix){
-  #g is the assumed population growth of the plan
-  #ne_dist is a vector representing the distribution of new entrants for each entry age
-  #wf1 is the population in period 1. wf2 is the wf1 population after decremented
-  #ea and age are two vectors representing entry age and age for active members
-  #position_matrix is the matrix that rearranges the new entrant numbers in the right positions to be added to the active workforce array
   ne <- sum(wf1)*(1 + g) - sum(wf2)
   ne_vec <- ne * ne_dist
   ne_matrix <- matrix(ne_vec, nrow = length(ea), ncol = length(age))
