@@ -2,3 +2,13 @@
 .Rhistory
 .RData
 .Ruserdata
+# R / RStudio 
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# OS noise 
+.DS_Store
+Thumbs.db
+desktop.ini
