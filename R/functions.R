@@ -625,12 +625,17 @@ get_pmt <- function(r, g = 0, nper, pv, t = 1) {
 #' get_cum_fv(interest = 0.04, cashflow = varying_cf, first_value = 500)
 #'
 #' @export
-get_cum_fv <- function(interest, cashflow, first_value = 0){
+get_cum_fv <- function(interest, cashflow, first_value = 0) {
   cumvalue <- double(length = length(cashflow))
   cumvalue[1] <- first_value
-  for (i in 2:length(cumvalue)) {
-    cumvalue[i] <- cumvalue[i - 1]*(1 + interest) + cashflow[i - 1]
+
+  # Only proceed if there are more than 1 elements
+  if (length(cumvalue) > 1) {
+    for (i in 2:length(cumvalue)) {
+      cumvalue[i] <- cumvalue[i - 1] * (1 + interest) + cashflow[i - 1]
+    }
   }
+
   return(cumvalue)
 }
 
