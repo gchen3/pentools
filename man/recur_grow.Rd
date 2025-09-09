@@ -9,7 +9,7 @@ recur_grow(x, g)
 \arguments{
 \item{x}{Numeric vector. A vector where the first element represents the initial value, and the rest are placeholders that will be replaced with recursively calculated values.}
 
-\item{g}{Numeric vector. A vector of growth rates for each period, expressed as decimals (e.g., 0.05 for 5% growth).}
+\item{g}{Numeric vector. A vector of growth rates for each period, expressed as decimals (e.g., 0.05 for 5 percent growth).}
 }
 \value{
 Numeric vector. A vector of the same length as \code{x}, where the first value is unchanged, and subsequent values are recursively grown based on \code{g}.

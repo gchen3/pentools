@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{get_pv_cf_roll}
 \alias{get_pv_cf_roll}
-\title{get_pv_cf_roll returns the remaining present value of future cash flows (cf) in every year forward}
+\title{Rolling NPV of Remaining Cash Flows}
 \usage{
 get_pv_cf_roll(rate, cf)
 }

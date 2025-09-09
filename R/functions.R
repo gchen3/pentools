@@ -2,7 +2,7 @@
 #'
 #' This function computes the present value factor for a given interest rate and time period.
 #'
-#' @param rate Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).
+#' @param rate Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).
 #' @param t Numeric. The time period for which the present value factor is calculated.
 #'
 #' @return Numeric. The present value factor, which is the discount factor (1 + rate)^(-t)
@@ -11,10 +11,10 @@
 #' The present value factor is used to discount future cash flows to their present value.
 #'
 #' @examples
-#' # Calculate the present value factor for a 5% interest rate over 3 periods
+#' # Calculate the present value factor for a 5percent interest rate over 3 periods
 #' get_pv(rate = 0.05, t = 3)
 #'
-#' # Calculate the present value factor for a 10% interest rate over 1 period
+#' # Calculate the present value factor for a 10 percent interest rate over 1 period
 #' get_pv(rate = 0.10, t = 1)
 #'
 #' @export
@@ -28,16 +28,16 @@ get_pv <- function (rate, t) {
 #'
 #' This function computes the present value of an annuity payment over a given time period and interest rate.
 #'
-#' @param rate Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%). If the rate is 0, the present value is equal to the total number of periods.
+#' @param rate Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent). If the rate is 0, the present value is equal to the total number of periods.
 #' @param t Numeric. The total number of periods for the annuity payments.
 #'
 #' @return Numeric. The present value of the annuity payments.
 #'
 #' @examples
-#' # Present value of an annuity with 5% interest over 10 periods
+#' # Present value of an annuity with 5 percent interest over 10 periods
 #' get_pv_pmt(rate = 0.05, t = 10)
 #'
-#' # Present value of an annuity with 0% interest over 10 periods
+#' # Present value of an annuity with 0 percent interest over 10 periods
 #' get_pv_pmt(rate = 0, t = 10)
 #'
 #' @export
@@ -56,17 +56,17 @@ get_pv_pmt <- function (rate, t) {
 #'
 #' This function computes the present value of a series of growing annuity payments over a specified time period, given an interest rate and growth rate.
 #'
-#' @param rate Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).
-#' @param growth Numeric. The growth rate of the payments per period as a decimal (e.g., 0.02 for 2%).
+#' @param rate Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).
+#' @param growth Numeric. The growth rate of the payments per period as a decimal (e.g., 0.02 for 2 percent).
 #' @param t Numeric. The total number of periods for the growing annuity payments.
 #'
 #' @return Numeric. The present value of the growing annuity payments.
 #'
 #' @examples
-#' # Present value of a growing annuity with 5% interest, 2% growth, over 10 periods
+#' # Present value of a growing annuity with 5 percent interest, 2 percent growth, over 10 periods
 #' get_pv_gpmt(rate = 0.05, growth = 0.02, t = 10)
 #'
-#' # Present value of a growing annuity with 5% interest, 5% growth, over 10 periods
+#' # Present value of a growing annuity with 5 percent interest, 5 percent growth, over 10 periods
 #' get_pv_gpmt(rate = 0.05, growth = 0.05, t = 10)
 #'
 #' @export
@@ -84,7 +84,7 @@ get_pv_gpmt <- function (rate, growth, t) {
 #' This function calculates the present value (PV) of a growing annuity, taking into account
 #' the interest rate, growth rate, number of periods, payment amount, and timing of payments.
 #'
-#' @param rate Numeric. The interest rate per period (e.g., 0.05 for 5%).
+#' @param rate Numeric. The interest rate per period (e.g., 0.05 for 5 percent).
 #' @param g Numeric. The growth rate of payments per period (default is 0).
 #' @param nper Integer. The total number of periods (e.g., 10 for 10 periods).
 #' @param pmt Numeric. The payment amount per period.
@@ -110,7 +110,7 @@ pv <- function(rate, g = 0, nper, pmt, t = 1) {
 #' This function computes the rolling present value of a series of payments (cash flows) over time.
 #' The first value in the \code{pmt_vec} vector must be zero, as it is a placeholder for calculations.
 #'
-#' @param rate Numeric. The interest rate per period (e.g., 0.05 for 5%).
+#' @param rate Numeric. The interest rate per period (e.g., 0.05 for 5 percent).
 #' @param g Numeric. The growth rate of payments per period (default is 0).
 #' @param nper Integer. The total number of periods (e.g., 10 for 10 periods).
 #' @param pmt_vec Numeric vector. A vector of payment amounts over the periods.
@@ -165,6 +165,8 @@ roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
 #   return(pv_vec)
 # }
 
+#' Net Present Value (NPV)
+#'
 #' npv calculates the present value of future cashflows (cf)
 #'
 #' @param rate Annual discount rate (scalar double).
@@ -193,7 +195,8 @@ npv <- function(rate, cashflows) {
   return(NPV)
 }
 
-
+#' Rolling NPV of Remaining Cash Flows
+#'
 #' get_pv_cf_roll returns the remaining present value of future cash flows (cf) in every year forward
 #'
 #' @param rate Annual discount rate (scalar double).
@@ -213,6 +216,8 @@ get_pv_cf_roll <- function(rate, cf) {
   return(pv)
 }
 
+#' First Payment of an Annuity Due (Unit PV)
+#'
 #' get_pmt_due calculates the first payment of an annuity due with a present value pv, interest rate (rate), and remaining period (t)
 #' payments are made in advance (beginning of each time period)
 #' Reference: Annuity Due Payment - PV, https://financeformulas.net/Annuity-Due-Payment-from-Present-Value.html
@@ -235,6 +240,8 @@ get_pmt_due <- function(rate, t) {
   return(pmt)
 }
 
+#' First Payment for Annuity Due (Given PV)
+#'
 #' get_pmt0 calculates the total first payment of an annuity due with a present value (pv),
 #' interest rate (r), and the number of periods (nper).
 #' This function multiplies the payment factor (calculated using get_pmt_due) by the present value.
@@ -261,7 +268,8 @@ get_pmt0 <- function(r, nper, pv) {
   return(a)
 }
 
-
+#' First Payment for a Growing Annuity Due (Unit PV)
+#'
 #' get_pmt_growth calculates the first payment for an growth annuity due with a present value pv,
 #' interet rate (rate), # remaining period (t), and growth rate (g)
 #' payments are made in advance (beginning of each time period)
@@ -445,7 +453,7 @@ get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
 #' This function calculates a series of values that grow recursively based on an initial value and a vector of growth rates, incorporating a lag effect.
 #'
 #' @param x Numeric vector. A vector where the first element represents the initial value, and the rest are placeholders that will be replaced with recursively calculated values.
-#' @param g Numeric vector. A vector of growth rates for each period, expressed as decimals (e.g., 0.05 for 5% growth).
+#' @param g Numeric vector. A vector of growth rates for each period, expressed as decimals (e.g., 0.05 for 5 percent growth).
 #'
 #' @return Numeric vector. A vector of the same length as \code{x}, where the first value is unchanged, and subsequent values are recursively grown based on \code{g}.
 #'
@@ -482,7 +490,7 @@ recur_grow <- function(x, g) {
 #' This function calculates a series of values that grow recursively based on an initial value and a vector of growth rates, without incorporating a lag effect.
 #'
 #' @param x Numeric vector. A vector where the first element represents the initial value, and the rest are placeholders that will be replaced with recursively calculated values.
-#' @param g Numeric vector. A vector of growth rates for each period, expressed as decimals (e.g., 0.05 for 5% growth).
+#' @param g Numeric vector. A vector of growth rates for each period, expressed as decimals (e.g., 0.05 for 5 percent growth).
 #'
 #' @return Numeric vector. A vector of the same length as \code{x}, where the first value is unchanged, and subsequent values are recursively grown based on \code{g} without a lag.
 #'
@@ -518,7 +526,7 @@ recur_grow2 <- function(x, g) {
 #' This function calculates a series of values that grow recursively starting from a single base value, using a fixed growth rate over a specified number of periods.
 #'
 #' @param x Numeric. The base value from which the growth calculation begins.
-#' @param g Numeric. The fixed growth rate, expressed as a decimal (e.g., 0.05 for 5% growth per period).
+#' @param g Numeric. The fixed growth rate, expressed as a decimal (e.g., 0.05 for 5 percent growth per period).
 #' @param nper Integer. The total number of periods for the growth calculation, including the initial value.
 #'
 #' @return Numeric vector. A vector of length \code{nper}, where the first element is \code{x}, and subsequent elements are calculated by applying the fixed growth rate recursively.
@@ -530,7 +538,7 @@ recur_grow2 <- function(x, g) {
 #' @examples
 #' # Example with a base value and a fixed growth rate
 #' x <- 100  # Initial value
-#' g <- 0.05  # Growth rate (5%)
+#' g <- 0.05  # Growth rate (5 percent)
 #' nper <- 5  # Number of periods
 #' recur_grow3(x, g, nper)
 #'
@@ -557,7 +565,7 @@ recur_grow3 <- function(x, g, nper) {
 #' This function calculates the payment amount for a growing annuity given a present value,
 #' interest rate, growth rate, number of periods, and payment timing.
 #'
-#' @param r Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).
+#' @param r Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).
 #' @param g Numeric. The growth rate of payments per period as a decimal (default is 0).
 #' @param nper Integer. The total number of periods for the annuity.
 #' @param pv Numeric. The present value of the growing annuity.
@@ -573,7 +581,7 @@ recur_grow3 <- function(x, g, nper) {
 #' The formula uses an effective rate of (1+r)/(1+g) - 1 and adjusts the present value by (1+r)^t.
 #'
 #' @examples
-#' # Calculate payment for a growing annuity with 5% interest, 2% growth, 10 periods
+#' # Calculate payment for a growing annuity with 5 percent interest, 2 percent growth, 10 periods
 #' get_pmt(r = 0.05, g = 0.02, nper = 10, pv = 10000, t = 1)
 #'
 #' # Calculate payment for an annuity with no growth (standard annuity)
@@ -596,7 +604,7 @@ get_pmt <- function(r, g = 0, nper, pv, t = 1) {
 #' This function computes the cumulative future values of a series of cash flows,
 #' compounding at a given interest rate over time.
 #'
-#' @param interest Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).
+#' @param interest Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).
 #' @param cashflow Numeric vector. A vector of cash flow amounts for each period.
 #' @param first_value Numeric. The initial cumulative value at the start (default is 0).
 #'
@@ -613,7 +621,7 @@ get_pmt <- function(r, g = 0, nper, pv, t = 1) {
 #' This represents the previous cumulative value growing with interest plus the new cash flow.
 #'
 #' @examples
-#' # Example with annual cash flows and 5% interest
+#' # Example with annual cash flows and 5 percent interest
 #' cashflows <- c(1000, 1200, 1500, 1800, 2000)
 #' get_cum_fv(interest = 0.05, cashflow = cashflows, first_value = 0)
 #'
@@ -644,7 +652,7 @@ get_cum_fv <- function(interest, cashflow, first_value = 0) {
 #' This function calculates the number of new entrants needed to maintain workforce growth
 #' and distributes them across entry ages, positioning them correctly in the workforce matrix.
 #'
-#' @param g Numeric. The assumed population growth rate of the plan as a decimal (e.g., 0.02 for 2%).
+#' @param g Numeric. The assumed population growth rate of the plan as a decimal (e.g., 0.02 for 2 percent).
 #' @param ne_dist Numeric vector. A vector representing the distribution of new entrants
 #'        for each entry age. Should sum to 1.0.
 #' @param wf1 Numeric vector or matrix. The workforce population in period 1 (before decrements).
@@ -669,7 +677,7 @@ get_cum_fv <- function(interest, cashflow, first_value = 0) {
 #'
 #' @examples
 #' # Example with workforce growth
-#' g <- 0.02  # 2% growth
+#' g <- 0.02  # 2 percent growth
 #' ne_dist <- c(0.3, 0.4, 0.2, 0.1)  # Distribution across 4 entry ages
 #' wf1 <- c(1000, 1200, 1100, 900)  # Initial workforce
 #' wf2 <- c(980, 1150, 1050, 850)   # Workforce after decrements

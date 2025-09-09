@@ -7,7 +7,7 @@
 get_pv(rate, t)
 }
 \arguments{
-\item{rate}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).}
+\item{rate}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).}
 
 \item{t}{Numeric. The time period for which the present value factor is calculated.}
 }
@@ -21,10 +21,10 @@ This function computes the present value factor for a given interest rate and ti
 The present value factor is used to discount future cash flows to their present value.
 }
 \examples{
-# Calculate the present value factor for a 5\% interest rate over 3 periods
+# Calculate the present value factor for a 5percent interest rate over 3 periods
 get_pv(rate = 0.05, t = 3)
 
-# Calculate the present value factor for a 10\% interest rate over 1 period
+# Calculate the present value factor for a 10 percent interest rate over 1 period
 get_pv(rate = 0.10, t = 1)
 
 }

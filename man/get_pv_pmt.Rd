@@ -7,7 +7,7 @@
 get_pv_pmt(rate, t)
 }
 \arguments{
-\item{rate}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%). If the rate is 0, the present value is equal to the total number of periods.}
+\item{rate}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent). If the rate is 0, the present value is equal to the total number of periods.}
 
 \item{t}{Numeric. The total number of periods for the annuity payments.}
 }
@@ -18,10 +18,10 @@ Numeric. The present value of the annuity payments.
 This function computes the present value of an annuity payment over a given time period and interest rate.
 }
 \examples{
-# Present value of an annuity with 5\% interest over 10 periods
+# Present value of an annuity with 5 percent interest over 10 periods
 get_pv_pmt(rate = 0.05, t = 10)
 
-# Present value of an annuity with 0\% interest over 10 periods
+# Present value of an annuity with 0 percent interest over 10 periods
 get_pv_pmt(rate = 0, t = 10)
 
 }

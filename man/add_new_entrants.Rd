@@ -7,7 +7,7 @@
 add_new_entrants(g, ne_dist, wf1, wf2, ea, age, position_matrix)
 }
 \arguments{
-\item{g}{Numeric. The assumed population growth rate of the plan as a decimal (e.g., 0.02 for 2%).}
+\item{g}{Numeric. The assumed population growth rate of the plan as a decimal (e.g., 0.02 for 2 percent).}
 
 \item{ne_dist}{Numeric vector. A vector representing the distribution of new entrants
 for each entry age. Should sum to 1.0.}
@@ -43,7 +43,7 @@ entry age and current age in the workforce structure.
 }
 \examples{
 # Example with workforce growth
-g <- 0.02  # 2\% growth
+g <- 0.02  # 2 percent growth
 ne_dist <- c(0.3, 0.4, 0.2, 0.1)  # Distribution across 4 entry ages
 wf1 <- c(1000, 1200, 1100, 900)  # Initial workforce
 wf2 <- c(980, 1150, 1050, 850)   # Workforce after decrements

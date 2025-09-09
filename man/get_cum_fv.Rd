@@ -7,7 +7,7 @@
 get_cum_fv(interest, cashflow, first_value = 0)
 }
 \arguments{
-\item{interest}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).}
+\item{interest}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).}
 
 \item{cashflow}{Numeric vector. A vector of cash flow amounts for each period.}
 
@@ -31,7 +31,7 @@ The cumulative future value is calculated iteratively:
 This represents the previous cumulative value growing with interest plus the new cash flow.
 }
 \examples{
-# Example with annual cash flows and 5\% interest
+# Example with annual cash flows and 5 percent interest
 cashflows <- c(1000, 1200, 1500, 1800, 2000)
 get_cum_fv(interest = 0.05, cashflow = cashflows, first_value = 0)
 

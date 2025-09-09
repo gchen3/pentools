@@ -7,7 +7,7 @@
 get_pmt(r, g = 0, nper, pv, t = 1)
 }
 \arguments{
-\item{r}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).}
+\item{r}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).}
 
 \item{g}{Numeric. The growth rate of payments per period as a decimal (default is 0).}
 
@@ -32,7 +32,7 @@ then using the payment calculation for a standard annuity, and finally adjusting
 The formula uses an effective rate of (1+r)/(1+g) - 1 and adjusts the present value by (1+r)^t.
 }
 \examples{
-# Calculate payment for a growing annuity with 5\% interest, 2\% growth, 10 periods
+# Calculate payment for a growing annuity with 5 percent interest, 2 percent growth, 10 periods
 get_pmt(r = 0.05, g = 0.02, nper = 10, pv = 10000, t = 1)
 
 # Calculate payment for an annuity with no growth (standard annuity)

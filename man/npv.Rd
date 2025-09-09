@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{npv}
 \alias{npv}
-\title{npv calculates the present value of future cashflows (cf)}
+\title{Net Present Value (NPV)}
 \usage{
 npv(rate, cashflows)
 }

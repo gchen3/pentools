@@ -2,10 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{get_pmt_due}
 \alias{get_pmt_due}
-\title{get_pmt_due calculates the first payment of an annuity due with a present value pv, interest rate (rate), and remaining period (t)
-payments are made in advance (beginning of each time period)
-Reference: Annuity Due Payment - PV, https://financeformulas.net/Annuity-Due-Payment-from-Present-Value.html
-Title}
+\title{First Payment of an Annuity Due (Unit PV)}
 \usage{
 get_pmt_due(rate, t)
 }

@@ -9,7 +9,7 @@ recur_grow3(x, g, nper)
 \arguments{
 \item{x}{Numeric. The base value from which the growth calculation begins.}
 
-\item{g}{Numeric. The fixed growth rate, expressed as a decimal (e.g., 0.05 for 5% growth per period).}
+\item{g}{Numeric. The fixed growth rate, expressed as a decimal (e.g., 0.05 for 5 percent growth per period).}
 
 \item{nper}{Integer. The total number of periods for the growth calculation, including the initial value.}
 }
@@ -26,7 +26,7 @@ This function calculates a series of values that grow recursively starting from 
 \examples{
 # Example with a base value and a fixed growth rate
 x <- 100  # Initial value
-g <- 0.05  # Growth rate (5\%)
+g <- 0.05  # Growth rate (5 percent)
 nper <- 5  # Number of periods
 recur_grow3(x, g, nper)
 

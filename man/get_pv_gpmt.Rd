@@ -7,9 +7,9 @@
 get_pv_gpmt(rate, growth, t)
 }
 \arguments{
-\item{rate}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5%).}
+\item{rate}{Numeric. The interest rate per period as a decimal (e.g., 0.05 for 5 percent).}
 
-\item{growth}{Numeric. The growth rate of the payments per period as a decimal (e.g., 0.02 for 2%).}
+\item{growth}{Numeric. The growth rate of the payments per period as a decimal (e.g., 0.02 for 2 percent).}
 
 \item{t}{Numeric. The total number of periods for the growing annuity payments.}
 }
@@ -20,10 +20,10 @@ Numeric. The present value of the growing annuity payments.
 This function computes the present value of a series of growing annuity payments over a specified time period, given an interest rate and growth rate.
 }
 \examples{
-# Present value of a growing annuity with 5\% interest, 2\% growth, over 10 periods
+# Present value of a growing annuity with 5 percent interest, 2 percent growth, over 10 periods
 get_pv_gpmt(rate = 0.05, growth = 0.02, t = 10)
 
-# Present value of a growing annuity with 5\% interest, 5\% growth, over 10 periods
+# Present value of a growing annuity with 5 percent interest, 5 percent growth, over 10 periods
 get_pv_gpmt(rate = 0.05, growth = 0.05, t = 10)
 
 }

@@ -2,9 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{get_pmt0}
 \alias{get_pmt0}
-\title{get_pmt0 calculates the total first payment of an annuity due with a present value (pv),
-interest rate (r), and the number of periods (nper).
-This function multiplies the payment factor (calculated using get_pmt_due) by the present value.}
+\title{First Payment for Annuity Due (Given PV)}
 \usage{
 get_pmt0(r, nper, pv)
 }

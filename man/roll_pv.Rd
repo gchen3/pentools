@@ -7,7 +7,7 @@
 roll_pv(rate, g = 0, nper, pmt_vec, t = 1)
 }
 \arguments{
-\item{rate}{Numeric. The interest rate per period (e.g., 0.05 for 5%).}
+\item{rate}{Numeric. The interest rate per period (e.g., 0.05 for 5 percent).}
 
 \item{g}{Numeric. The growth rate of payments per period (default is 0).}
 
